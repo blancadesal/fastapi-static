@@ -37,7 +37,9 @@ You can start the development server by running:
 uvicorn app:app --reload
 ```
 
-The application will start running at <http://127.0.0.1:8000/>.
+The application will start running at <http://127.0.0.1:8000/>
+
+The API Docs will be available at <http://127.0.0.1:8000/docs>
 
 ## Endpoints
 
