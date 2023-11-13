@@ -50,4 +50,4 @@ This project is licensed under the GNU General Public License v3.0 - see the LIC
 
 ## Tutorial
 
-For the full tutorial on how to deploy the app on Tooloforge, see [My first buildpack Python ASGI tool](https://wikitech.wikimedia.org/w/index.php?title=Help:Toolforge/Build_Service/My_first_Buildpack_Python_ASGI_tool).
+For the full tutorial on how to deploy the app on Toolforge, see [My first buildpack Python ASGI tool](https://wikitech.wikimedia.org/w/index.php?title=Help:Toolforge/Build_Service/My_first_Buildpack_Python_ASGI_tool).
