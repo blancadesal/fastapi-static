@@ -22,6 +22,8 @@ You can check your Python version by running:
 python --version
 ```
 
+You will also need to install `poetry` to manage the dependencies. <https://python-poetry.org/>
+
 ### Installing
 
 Clone the repository:
@@ -34,7 +36,7 @@ cd sample-python-buildpack-asgi
 Install the required packages:
 
 ```bash
-pip install -r requirements.txt
+poetry install
 ```
 
 ## Running the Application
@@ -42,7 +44,7 @@ pip install -r requirements.txt
 Start the development server:
 
 ```bash
-fastapi dev
+poetry run fastapi dev
 ```
 
 The application will start running at <http://127.0.0.1:8000/>
