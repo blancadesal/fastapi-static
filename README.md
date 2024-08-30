@@ -1,6 +1,13 @@
 # Toolforge Python ASGI Tutorial
 
-This is a simple FastAPI application that fetches a random quote from the Quotable API.
+This is a simple FastAPI application that fetches random quotes from the Quotable API and displays them on a web page.
+
+## Features
+
+- Backend API endpoint to fetch random quotes
+- Frontend interface to display quotes and request new ones
+- Health check endpoint
+- Auto-generated API documentation
 
 ## Getting Started
 
@@ -8,7 +15,8 @@ These instructions will get you a copy of the project up and running on your loc
 
 ### Prerequisites
 
-You need Python 3.7 or later to run this application. You can check your Python version by running:
+This application has only been tested with Python 3.11 and later.
+You can check your Python version by running:
 
 ```bash
 python --version
@@ -16,7 +24,7 @@ python --version
 
 ### Installing
 
-First, clone the repository to your local machine:
+Clone the repository:
 
 ```bash
 git clone https://gitlab.wikimedia.org/toolforge-repos/sample-python-buildpack-asgi.git
@@ -31,20 +39,39 @@ pip install -r requirements.txt
 
 ## Running the Application
 
-You can start the development server by running:
+Start the development server:
 
 ```bash
-uvicorn app:app --reload
+fastapi dev
 ```
 
 The application will start running at <http://127.0.0.1:8000/>
 
-The API Docs will be available at <http://127.0.0.1:8000/docs>
+If you need it to run on a different port, you can specify the port number:
 
-## Endpoints
+```bash
+fastapi dev --port 8080
+```
 
-- GET /: Returns a simple greeting.
-- GET /quote: Fetches and returns a random quote from the Quotable API.
+## Usage
+
+- Open your web browser and navigate to <http://127.0.0.1:8000/>
+- You will see a random quote displayed on the page
+- Click the "New Quote" button to fetch and display a new random quote
+
+## API Endpoints
+
+- GET /: Serves the main HTML page with the quote interface
+- GET /quote: Returns a JSON object containing a random quote
+
+The API documentation (Swagger UI) is available at <http://127.0.0.1:8000/docs>
+
+## Project Structure
+
+- `app.py`: The main FastAPI application file
+- `static/index.html`: The HTML file for the frontend interface
+- `requirements.txt`: List of Python dependencies
+- `Procfile`: Configuration file for deployment to Toolforge using the Build Service
 
 ## License
 
