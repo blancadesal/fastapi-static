@@ -18,11 +18,13 @@
 # with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 import httpx
-
 from fastapi import FastAPI, HTTPException
+from fastapi.responses import HTMLResponse
+from fastapi.staticfiles import StaticFiles
+import os
 
 app = FastAPI()
-
+app.mount("/static", StaticFiles(directory="static"), name="static")
 
 async def fetch_random_quote():
     '''Fetches a random quote from the Quotable API, an open-source API (https://github.com/lukePeavey/quotable).
@@ -35,14 +37,20 @@ async def fetch_random_quote():
             raise HTTPException(status_code=response.status_code, detail="Unable to fetch quote")
 
 
-@app.get("/")
-async def hello():
-    return {"Hello": "World"}
+@app.get("/healthz")
+async def healthz():
+    return {"status": "ok"}
 
 
 @app.get("/quote")
 async def read_random_quote():
     quote_data = await fetch_random_quote()
     return quote_data
+
+
+@app.get("/", response_class=HTMLResponse)
+async def read_root():
+    with open("static/index.html", "r") as f:
+        return f.read()
 
 
