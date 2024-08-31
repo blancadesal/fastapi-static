@@ -21,7 +21,6 @@ import httpx
 from fastapi import FastAPI, HTTPException
 from fastapi.responses import HTMLResponse
 from fastapi.staticfiles import StaticFiles
-import os
 
 app = FastAPI()
 app.mount("/static", StaticFiles(directory="static"), name="static")
@@ -43,10 +42,35 @@ async def healthz():
 
 
 @app.get("/quote")
-async def read_random_quote():
-    quote_data = await fetch_random_quote()
-    return quote_data
+async def get_quote():
+    async with httpx.AsyncClient() as client:
+        response = await client.get("https://api.quotable.io/random")
+        quote_data = response.json()
 
+    # Check if the author has a Wikipedia page
+    author = quote_data["author"]
+    wikipedia_url = await get_wikipedia_url(author)
+
+    return {
+        "content": quote_data["content"],
+        "author": author,
+        "wikipedia_url": wikipedia_url
+    }
+
+async def get_wikipedia_url(author):
+    # Attempt to find a Wikipedia page for the author
+    search_url = f"https://en.wikipedia.org/w/api.php?action=query&format=json&list=search&srsearch={author}"
+    async with httpx.AsyncClient() as client:
+        response = await client.get(search_url)
+        data = response.json()
+
+    if data["query"]["search"]:
+        # If a page is found, return the URL
+        page_title = data["query"]["search"][0]["title"].replace(" ", "_")
+        return f"https://en.wikipedia.org/wiki/{page_title}"
+    else:
+        # If no page is found, return None
+        return None
 
 @app.get("/", response_class=HTMLResponse)
 async def read_root():
