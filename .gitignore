@@ -1,2 +1,3 @@
 __pycache__/
 quote_cache.json
+.ruff_cache
