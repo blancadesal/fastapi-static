@@ -33,14 +33,14 @@
             margin-top: 1rem;
             padding: 0.5rem 1rem;
             font-size: 1rem;
-            background-color: #007bff;
+            background-color: {{ button_color }};
             color: white;
             border: none;
             border-radius: 5px;
             cursor: pointer;
         }
         button:hover {
-            background-color: #0056b3;
+            opacity: 0.8;
         }
     </style>
 </head>
@@ -48,7 +48,7 @@
     <div class="container">
         <div id="quote"></div>
         <div id="author"></div>
-        <button onclick="getNewQuote()">New Quote</button>
+        <button id="newQuoteBtn" onclick="getNewQuote()">New Quote</button>
     </div>
     <script>
         async function getNewQuote() {

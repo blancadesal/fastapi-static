@@ -17,16 +17,19 @@
 # You should have received a copy of the GNU General Public License along
 # with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+import os
 import httpx
-from fastapi import FastAPI, HTTPException
+
+from fastapi import FastAPI, HTTPException, Request
 from fastapi.responses import HTMLResponse
 from fastapi.staticfiles import StaticFiles
+from fastapi.templating import Jinja2Templates
 
 app = FastAPI()
-app.mount("/static", StaticFiles(directory="static"), name="static")
+templates = Jinja2Templates(directory="templates")
 
 async def fetch_random_quote():
-    '''Fetches a random quote from the Quotable API, an open-source API (https://github.com/lukePeavey/quotable).
+    '''Fetch a random quote from the Quotable API, an open-source API (https://github.com/lukePeavey/quotable).
     '''
     async with httpx.AsyncClient() as client:
         response = await client.get('https://api.quotable.io/random')
@@ -73,8 +76,9 @@ async def get_wikipedia_url(author):
         return None
 
 @app.get("/", response_class=HTMLResponse)
-async def read_root():
-    with open("static/index.html", "r") as f:
-        return f.read()
-
-
+async def read_root(request: Request):
+    button_color = os.getenv('BUTTON_COLOR', 'blue')
+    return templates.TemplateResponse("index.html", {
+        "request": request,
+        "button_color": '#28a745' if button_color == 'green' else '#007bff'
+    })
