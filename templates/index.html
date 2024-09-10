@@ -57,7 +57,7 @@
                 const data = await response.json();
                 document.getElementById('quote').textContent = `"${data.content}"`;
                 const authorElement = document.getElementById('author');
-                authorElement.innerHTML = data.wikipedia_url 
+                authorElement.innerHTML = data.wikipedia_url
                     ? `- <a href="${data.wikipedia_url}" target="_blank">${data.author}</a>`
                     : `- ${data.author}`;
             } catch (error) {
